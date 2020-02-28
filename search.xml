@@ -192,8 +192,8 @@
         <category>软件安装与使用</category>
       </categories>
       <tags>
-        <tag>Github</tag>
         <tag>Hexo</tag>
+        <tag>Github</tag>
       </tags>
   </entry>
   <entry>
@@ -204,8 +204,8 @@
         <category>软件安装与使用</category>
       </categories>
       <tags>
-        <tag>Github</tag>
         <tag>Hexo</tag>
+        <tag>Github</tag>
       </tags>
   </entry>
   <entry>
@@ -216,8 +216,8 @@
         <category>软件安装与使用</category>
       </categories>
       <tags>
-        <tag>Hexo</tag>
         <tag>Next</tag>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -228,8 +228,8 @@
         <category>软件安装与使用</category>
       </categories>
       <tags>
-        <tag>Hexo</tag>
         <tag>Next</tag>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -284,13 +284,13 @@
     <content type="text"><![CDATA[]]></content>
   </entry>
   <entry>
-    <title><![CDATA[标签]]></title>
-    <url>%2Ftags%2Findex.html</url>
+    <title><![CDATA[分类]]></title>
+    <url>%2Fcategories%2Findex.html</url>
     <content type="text"><![CDATA[]]></content>
   </entry>
   <entry>
-    <title><![CDATA[分类]]></title>
-    <url>%2Fcategories%2Findex.html</url>
+    <title><![CDATA[标签]]></title>
+    <url>%2Ftags%2Findex.html</url>
     <content type="text"><![CDATA[]]></content>
   </entry>
 </search>
