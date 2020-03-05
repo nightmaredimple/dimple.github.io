@@ -315,23 +315,23 @@
     <content type="text"><![CDATA[N5kYz6Tb7k]]></content>
   </entry>
   <entry>
-    <title><![CDATA[archives]]></title>
-    <url>%2Farchives%2Findex.html</url>
-    <content type="text"><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title><![CDATA[标签]]></title>
-    <url>%2Ftags%2Findex.html</url>
-    <content type="text"><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title><![CDATA[简介]]></title>
     <url>%2Fabout%2Findex.html</url>
     <content type="text"><![CDATA[]]></content>
   </entry>
   <entry>
+    <title><![CDATA[archives]]></title>
+    <url>%2Farchives%2Findex.html</url>
+    <content type="text"><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[分类]]></title>
     <url>%2Fcategories%2Findex.html</url>
+    <content type="text"><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[标签]]></title>
+    <url>%2Ftags%2Findex.html</url>
     <content type="text"><![CDATA[]]></content>
   </entry>
 </search>
