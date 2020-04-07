@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://huangpiao.tech/2020/04/07/MOT%E5%BC%80%E6%BA%90%E5%AE%9E%E6%97%B6%E6%96%B0SOTA%20A%20Simple%20Baseline%20for%20Multi-Object%20Tracking/</loc>
+    
+    <lastmod>2020-04-07T05:00:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://huangpiao.tech/2020/04/06/CVPR2020%20%E5%95%86%E6%B1%A4%E5%86%8D%E8%B0%88%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%B8%AD%E7%9A%84%E5%88%86%E7%B1%BB%E5%92%8C%E5%AE%9A%E4%BD%8D%E5%86%B2%E7%AA%81%E9%97%AE%E9%A2%98/</loc>
+    
+    <lastmod>2020-04-06T15:00:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://huangpiao.tech/2020/04/03/%E8%81%94%E5%90%88%E6%A3%80%E6%B5%8B%E5%92%8C%E8%B7%9F%E8%B8%AA%E7%9A%84MOT%E7%AE%97%E6%B3%95%E8%A7%A3%E6%9E%90/</loc>
+    
+    <lastmod>2020-04-03T09:35:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://huangpiao.tech/2020/03/27/%E5%A4%9A%E7%9B%AE%E6%A0%87%E8%B7%9F%E8%B8%AA%E4%B8%AD%E7%9A%84%E7%9B%B8%E6%9C%BA%E8%BF%90%E5%8A%A8%E6%A8%A1%E5%9E%8B/</loc>
     
     <lastmod>2020-03-27T09:10:00.000Z</lastmod>
