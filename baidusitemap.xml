@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://huangpiao.tech/2020/04/08/CVPR2020%20%20%E5%A4%9A%E7%9B%AE%E6%A0%87%E8%B7%9F%E8%B8%AA%EF%BC%88%E8%BD%A6%E8%BE%86%EF%BC%89%E4%B8%8E%E6%A3%80%E6%B5%8B%E6%A1%86%E6%9E%B6%20RetinaTrack/</loc>
+    <lastmod>2020-04-08</lastmod>
+  </url>  <url>
     <loc>https://huangpiao.tech/2020/04/07/MOT%E5%BC%80%E6%BA%90%E5%AE%9E%E6%97%B6%E6%96%B0SOTA%20A%20Simple%20Baseline%20for%20Multi-Object%20Tracking/</loc>
     <lastmod>2020-04-07</lastmod>
   </url>  <url>
