@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://huangpiao.tech/2020/06/26/%E5%9F%BA%E4%BA%8EGNN%E7%9A%84%E5%A4%9A%E7%9B%AE%E6%A0%87%E8%B7%9F%E8%B8%AA%E7%AE%97%E6%B3%95%E8%A7%A3%E6%9E%90/</loc>
+    <lastmod>2020-06-26</lastmod>
+  </url>  <url>
+    <loc>https://huangpiao.tech/2020/04/17/arXiv04.17%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/</loc>
+    <lastmod>2020-04-17</lastmod>
+  </url>  <url>
     <loc>https://huangpiao.tech/2020/04/15/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A4%9A%E7%9B%AE%E6%A0%87%E8%B7%9F%E8%B8%AA%E7%AE%97%E6%B3%95%EF%BC%88%E4%B8%8A%EF%BC%89%E2%80%94%E2%80%94%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E6%95%B0%E6%8D%AE%E5%85%B3%E8%81%94/</loc>
     <lastmod>2020-04-15</lastmod>
   </url>  <url>
@@ -11,6 +17,9 @@
     <lastmod>2020-04-07</lastmod>
   </url>  <url>
     <loc>https://huangpiao.tech/2020/04/06/CVPR2020%20%E5%95%86%E6%B1%A4%E5%86%8D%E8%B0%88%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%B8%AD%E7%9A%84%E5%88%86%E7%B1%BB%E5%92%8C%E5%AE%9A%E4%BD%8D%E5%86%B2%E7%AA%81%E9%97%AE%E9%A2%98/</loc>
+    <lastmod>2020-04-06</lastmod>
+  </url>  <url>
+    <loc>https://huangpiao.tech/2020/04/08/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A4%9A%E7%9B%AE%E6%A0%87%E8%B7%9F%E8%B8%AA%E7%AE%97%E6%B3%95%EF%BC%88%E4%B8%AD%EF%BC%89%E2%80%94%E2%80%94%E4%BB%8EUMA%20Tracker(CVPR2020)%E5%87%BA%E5%8F%91%E8%B0%88%E8%B0%88SOT%E7%B1%BBMOT%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2020-04-06</lastmod>
   </url>  <url>
     <loc>https://huangpiao.tech/2020/04/03/%E8%81%94%E5%90%88%E6%A3%80%E6%B5%8B%E5%92%8C%E8%B7%9F%E8%B8%AA%E7%9A%84MOT%E7%AE%97%E6%B3%95%E8%A7%A3%E6%9E%90/</loc>
@@ -51,6 +60,18 @@
   </url>  <url>
     <loc>https://huangpiao.tech/2019/01/21/%E5%88%A9%E7%94%A8Hexo%E5%B0%86%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0GitPages%E5%92%8CCodingPages/</loc>
     <lastmod>2020-01-19</lastmod>
+  </url>  <url>
+    <loc>https://huangpiao.tech/2019/02/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E6%9C%80%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/</loc>
+    <lastmod>2019-02-26</lastmod>
+  </url>  <url>
+    <loc>https://huangpiao.tech/2019/02/20/python%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
+    <lastmod>2019-02-20</lastmod>
+  </url>  <url>
+    <loc>https://huangpiao.tech/2019/02/18/C++%E4%B9%8B%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
+    <lastmod>2019-02-18</lastmod>
+  </url>  <url>
+    <loc>https://huangpiao.tech/2019/02/17/C++%E4%B9%8B%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6/</loc>
+    <lastmod>2019-02-17</lastmod>
   </url>  <url>
     <loc>https://huangpiao.tech/2019/02/15/%E7%9F%A9%E9%98%B5%E6%B1%82%E5%AF%BC/</loc>
     <lastmod>2019-02-15</lastmod>
