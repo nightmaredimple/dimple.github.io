@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title><![CDATA[Waymo2020 | 2D/3D目标检测、跟踪和域自适应性冠军解决方案解析]]></title>
-    <url>%2F2020%2F06%2F30%2FWaymo%202020%202d%E5%92%8C3d%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%B8%8E%E8%B7%9F%E8%B8%AA%E5%86%A0%E5%86%9B%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%2F</url>
+    <url>%2F2020%2F07%2F04%2FWaymo%202020%202d%E5%92%8C3d%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%B8%8E%E8%B7%9F%E8%B8%AA%E5%86%A0%E5%86%9B%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%2F</url>
     <content type="text"><![CDATA[前言随着最近Waymo Open Dataset Challenges 2020 的落幕，其中关于2D/3D目标检测和跟踪赛道的部分冠亚军解决方案也都公布了，由于我只看到了地平线发布的论文，所以就只分析他们公司在这次比赛中的解决方案。PS:地平线在Waymo2020中获得了3D检测、2D/3D跟踪和域自适应性赛道冠军，2D检测赛道亚军。一、HorizonDet论文题目：2nd Place Solution for Waymo Open Dataset Challenge - 2D Object Detection论文地址：https://arxiv.org/pdf/2006.15507.pdf一般检测竞赛的算法技术报告中，榜前的方法都是各种算法ensemble的，比如多种检测算法结合，又比如多种nms方式的结合等。1.1 模型选择地平线这次在Waymo 2020的2D检测赛道获得了第二名，也同样用到了模型ensemble的方式。对于检测算法，他们团队考虑到两阶段算法和单阶段anchor-free算法在检测结果多样性方面的互补，以及anchor-free算法在拥挤、小目标场景下更好的效果，选用了Cascade R-CNN和CenterNet的结合。其中CenterNet部分，采用了两组Hourglass104网络作为backbone，其中第一组的输出只在训练的时候为提供auxilliary loss，具体见下图。1.2 训练策略另外，还引入了AAAI2020中针对CenterNet这类算法框架提出的训练策略改进TTF[2]，为了提供更多高质量的正样本。由于CenterNet所采用的高斯核只考虑了中心点和与之距离的因素，在x,y方向共用一组标准差，生成了圆形的高斯mask：而TTF中则是考虑到了目标的aspect ratio，提出了多样的标准差：上述的这种只是对中心点回归训练的改进，接下来是对目标框宽高的回归的改进。原始的CenterNet假设预测得到的中心点绝对准确，所以可以通过宽高得到最终的目标框。但是TTF默认预测得到中心点不一定准确，所以预测的是中心点距离两个角点的offset：对于anchor的设定则是在原始的0.5,1,2基础上，考虑到车辆，加入了0.25和0.75两种aspect ratio。与此同时，考虑到部分标注错误，还加入了label smoothing。1.3模型ensemble接下来就是模型ensemble了，除了Cascade RCNN和CenterTrack的结合，还考虑到了不同尺度输入策略（对于前者选取了0.8,1.0,1.2三种尺度，对于后者选取了0.5,0.75,1,1.25,1.5五种尺度），当然还有不同训练代数、策略下不同的模型，还有不同后处理的结果。作者团队将不同检测框架和不同推理策略进行组合，通过二叉树来构建贪婪式的自动ensemble框架：每组模型的评价由验证集上的mAP指标为准，模型结果的融合则是基于不同的nms处理方式，这里作者用了五种后处理方式：其中第二种adj-nms指的是商汤在OpenImage2019上的提出的方案：即先用传统的NMS，再用Soft-NMS。第三种NMS指的是ICCV2017 workshop上的一篇论文提出的方法：即对于当前选择的置信度较高的候选框，基于其周围候选框与其的iou和各自的类别置信度信息对候选框进行加权融合，有点像softer-nms。对于后两种后处理即直接取第一种模型或者第二种模型。结果如下：这里面的GAE就是模型ensemble，Expert Models指的是只用白天、夜晚等场景下的数据进行训练。二、AFDet论文题目：AFDet: Anchor Free One Stage 3D Object Detection论文地址：https://arxiv.org/pdf/2006.12671v1.pdfAFDet是地平线这次3D检测竞赛的baseline算法，在CVPR2020 Workshop上报告过，从算法流程图可以知道的AFDet由点云编码器、骨干网络和检测器三部分构成。其中点云编码器部分采用的是CVPR2019的一篇论文中提出的PointPillars算法：其首先基于鸟瞰图将原始空间划分为HxW的网格区域，那么每个点都存在有（x,y,z,r,x_c,y_c,z_c,x_p,y_p）9个维度的特征。其中前三个为每个点的真实位置坐标，r为反射率，带c下标的是该网格内所有点的均值，带p下标的是对点相对于网格中心的偏差。然后取P个非空网格区域，每个区域取N个点，多的话就采样，少的话就补0，D代表特征维度9，因此就得到DxPxN的tensor。然后利用线性层进行特征转换得到CxPxN的tensor，紧接着利用取最值的操作得到CxP的tensor，即每个非空网格区域对应一组特征。最后根据网格位置映射到HxW空间，得到CxHxW的tensor，从而可以使用二维卷积的策略进行进一步特征学习。其backbone部分网络结构如下：在检测器部分，作者团队采用的是anchor-free的检测框架，其回归预测部分包含有5个分支：目标定位（heatmap、offset和z方向定位）：这部分类似于centernet，中心点的标签是依据点到预设网格点的归一化后的offset确定的，而heatmap则是采用的：而offset的损失计算则引入了一个围绕中心点的正方形区域，用来缓和微小的定位误差：其中b是网格区域的size，r是正方形的size，通过一个方形区域的设定，当中心点位置刚好正确，那么误差最小，如果中心点位置稍微发生偏移则会增大误差。z方向的回归采用的是L1 Loss框的尺寸回归：这部分就是长宽高的回归，同样采用L1 Loss。方向回归：这里的方向是绕z轴的角度，设定了两个bin，分别是[-7π/6,π/6]和[-π/6,7π/6]，每个bin有四个变量，两个用作softmax分类，两个用作角度回归。其中分类是判定属于哪种bin，角度回归是相对于bin中心的sin和cos偏差。在推理阶段，通过max pooling等操作取峰值，从而避免使用NMS。结果如下：三、HorizonLiDAR3D论文题目：1st Place Solution for Waymo Open Dataset Challenge - 3D Detection and Domain Adaptation论文地址：https://arxiv.org/pdf/2006.15505.pdf可以看到，HorizonLiDAR3D检测框架跟AFDet基本一样，区别就在于，这个是用来参赛的，所以会增加很多tricks和ensemble。其中的点云编码部分跟之前一样，还是编码成了pseudo image形式：而中间的backbone和necks部分则是换成了更加复杂的形式，包含有两种3D特征提取器和三种RPN网络，组合成了三种网络框架：其中3D特征提取部分的SPConv3D卷积是由几个submanifold卷积和一个稀疏卷积层构成[6]，其目的是防止网络稀疏性下降：可以看到原本稀疏的点在经过卷积之后，逐渐变得模糊，从而使得稀疏性下降，所以采用了稀疏卷积。这里我没有具体到相应的论文去研究这种卷积的模式，不过我猜测应该类似于在卷积之后，通过判断每个点的感受野中心是否为上一层的active区域，如果是就保留，否则置0.在推理阶段，作者团队将前4帧的点云信息也一并利用起来，用来增加稠密性，所以输入维度多了一个时间维度。另外团队也充分利用了Waymo数据集提供的5种LiDAR sweeps。在数据增强环节，除了一些基本的平移旋转操作，作者在每帧中加入了6个车辆、8个行人和10个自行车，并沿着z轴做随机反转。特别地，作者团队借鉴CVPR2020中Pointpainting的方式，引入了颜色信息，用来增加类别区分度和更丰富的伪点云信息：引入painting之后的效果好了很多：当然，还有一些模型ensemble，这里我就不再细说了，放最后的结果：四、HorizonMOT(2D/3D)论文题目：1st Place Solutions for Waymo Open Dataset Challenges - 2D and 3D Tracking论文地址：https://arxiv.org/abs/2006.15506.pdf近期联合检测和跟踪的算法框架很热门，性能也比较好，比如CenterTrack、FairMOT等。作者团队也借鉴了这一点，检测框架部分自然就是采用了上面所介绍的HorizonDet和HorizonLiDAR3D，而跟踪分支则是借鉴了FairMOT的模式，增加了reid分支：其中虚线部分是尚未来得及在竞赛中使用的部分。跟踪部分假设不使用未来信息，不考虑相机运动，具体如下：运动模型这一部分借鉴了DeepSort算法，使用了Kalman Filter算法，在2D跟踪中设定的状态变量是中心坐标、长宽比和高度以及各自的速度变化量。在3D跟踪中设定的状态变量为3D坐标、长宽高和位置的速度变化量。表观模型表观模型的引入主要是为了防止拥挤和轨迹暂时丢失的问题，行人输入为128x64，车辆输入为128x128，经过11个3x3卷积和3个1x1卷积以及一些pooling层得到512维向量。数据关联数据关联的基础算法是匈牙利算法，这里作者将关联过程分成了三个阶段，与此同时将检测结果按照置信度分成了两份，一份置信度大于t(s)，一份介于t(s)/2和t(s)之间。第一阶段的数据关联跟DeepSort一样，采用级联匹配的方式，对跟踪框和第一份检测结果进行匹配，也就是先匹配持续跟踪的目标，对于暂时丢失的目标降低优先级；第二阶段的数据关联会对第一阶段中尚未匹配的跟踪轨迹（丢失时间小于3）和剩余的第一份检测结果进行匹配，当然也会降低一些匹配阈值第三阶段的数据关联会对第二阶段尚未匹配的跟踪轨迹和第二份检测结果进行匹配，同样降低阈值标准。对于不同目标的阈值也是有区别的：而对于2D和3D目标的IOU距离计算则是：其中ReID特征的余弦距离用于第一阶段，而IOU距离用于后两个阶段。最终的结果如下：参考资源[1] 2nd Place Solution for Waymo Open Dataset Challenge - 2D Object Detection[2] Training-Time-Friendly Network for Real-Time Object Detection[3] AFDet: Anchor Free One Stage 3D Object Detection[4] PointPillars: Fast Encoders for Object Detection from Point Clouds[5] 1st Place Solution for Waymo Open Dataset Challenge - 3D Detection and Domain Adaptation[6] Second: Sparsely embedded convolutional detection[7]1st Place Solutions for Waymo Open Dataset Challenges - 2D and 3D Tracking]]></content>
       <categories>
         <category>机器学习</category>
@@ -559,23 +559,23 @@
     <content type="text"><![CDATA[N5kYz6Tb7k]]></content>
   </entry>
   <entry>
-    <title><![CDATA[archives]]></title>
-    <url>%2Farchives%2Findex.html</url>
-    <content type="text"><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title><![CDATA[分类]]></title>
-    <url>%2Fcategories%2Findex.html</url>
-    <content type="text"><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title><![CDATA[Piao Huang]]></title>
     <url>%2Fabout%2Findex.html</url>
     <content type="text"><![CDATA[I am studying for my master degree in Huazhong University of Science &amp; Technology (HUST). My research interests are in computer vision and deep learning.EducationHuazhong University of Science and Technology (HUST) 2017.12 ~National Key Laboratory of Science and Technology on Multi-spectral Information Processing, School of Artificial Intelligence and Automation.Master of Control Science and Engineering.Huazhong Agricultural University (HZAU) 2013.9 ~ 2017.7Key Laboratory of Agricultural Equipment in the Middle and LowerReaches of the Yangtze River, Ministry of Agriculture, School of EngineeringBachelor of EngineeringPublicationsRefinements in Motion and Appearance for Online Multi-Object TrackingPiao Huang , Shoudong Han, Jun Zhao, Donghaisheng Liu, HongweiWang, En Yu, and Alex ChiChung Kot1st place of MOT Challenge 16&amp;17. 2020.3arxiv codeExperienceFace recognition access control system 2018.07 ~ 2019.08Responsible for the overall framework and all algorithm implementations1:1 and 1:N (N=8000)Security Intelligence System 2018.06 ~ 2018.12Responsible for the Face recognition access control systemm:N(N = 10000)Awards and HonorsNational 1st prize in CUMCM, 2015National 2nd prize in NPMCM, 2015Meritorious Winner in MCM/ICM, 2016National 2nd prize in NPMCM, 2018]]></content>
   </entry>
   <entry>
+    <title><![CDATA[archives]]></title>
+    <url>%2Farchives%2Findex.html</url>
+    <content type="text"><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[标签]]></title>
     <url>%2Ftags%2Findex.html</url>
+    <content type="text"><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[分类]]></title>
+    <url>%2Fcategories%2Findex.html</url>
     <content type="text"><![CDATA[]]></content>
   </entry>
 </search>
