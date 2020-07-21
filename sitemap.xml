@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://huangpiao.tech/about/index.html</loc>
+    
+    <lastmod>2020-07-21T16:41:54.837Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://huangpiao.tech/2020/06/27/%E5%9F%BA%E4%BA%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%A4%9A%E7%9B%AE%E6%A0%87%E8%B7%9F%E8%B8%AA%E7%AE%97%E6%B3%95%EF%BC%88%E4%B8%8B%EF%BC%89%E2%80%94%E2%80%94ReID%E4%B8%8EMOT%E7%9A%84%E8%81%94%E7%B3%BB/</loc>
     
     <lastmod>2020-07-09T11:55:00.000Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>https://huangpiao.tech/2020/07/04/Waymo%202020%202d%E5%92%8C3d%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%B8%8E%E8%B7%9F%E8%B8%AA%E5%86%A0%E5%86%9B%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</loc>
     
     <lastmod>2020-07-04T15:00:00.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://huangpiao.tech/about/index.html</loc>
-    
-    <lastmod>2020-07-01T16:20:18.088Z</lastmod>
     
   </url>
   
