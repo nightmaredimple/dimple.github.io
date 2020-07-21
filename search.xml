@@ -435,17 +435,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Ubuntu下opencv的安装与卸载]]></title>
-    <url>%2F2019%2F01%2F28%2FUbuntu%E4%B8%8Bopencv%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E5%8D%B8%E8%BD%BD%2F</url>
-    <content type="text"><![CDATA[前言Ubuntu上我们一般需要安装opencv来完成图像处理等程序操作，下面我以opencv3.4.0在Ubuntu16.04上的安装为例进行讲解。1. 系统自带opencvUbuntu16.04系统资源库自带opencv2.4.8，如果不需要用到高级功能，这点即可。其下载方法如下：1sudo apt install libopencv-dev判断系统上是否存在opencv，可输入：1pkg-config --modversion opencv卸载方法为:1sudo apt remove libopencv-dev2.官网下载安装opencv2.1 安装opencvStep1 卸载已有opencvStep2 进入Opencv官网选择对应版本source下载。Step3 在下载路径执行：12345678910111213141516171819202122232425262728293031if [ ! -d "opencv-3.4.0/" ];thenunzip opencv-3.4.0.zip -d ./elseecho "opencv package has been unzipped"fisudo apt-get install cmake pkg-config build-essential libgtk2.0-dev libavcodec-dev libavformat-dev libjpeg.dev libtiff4.dev libswscale-dev libjasper-dev -ycd opencv-3.4.0/sudo mkdir buildcd buildsudo make cleancmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local ..sudo make -j8sudo make installif [ 0 -eq $(cat /etc/ld.so.conf.d/opencv.conf | grep -c '/usr/local/lib') ] ;then echo '/usr/local/lib' &gt;&gt; /etc/ld.so.conf.d/opencv.conffiif [ 0 -eq $(cat /etc/bash.bashrc | grep -c 'PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig') ] ;then echo 'PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig' &gt;&gt; /etc/bash.bashrcfiif [ 0 -eq $(cat /etc/bash.bashrc | grep -c 'export PKG_CONFIG_PATH') ] ;then echo 'export PKG_CONFIG_PATH' &gt;&gt; /etc/bash.bashrcfisudo ldconfigsudo updatedbsource /etc/bash.bashrcStep4 如果安装过程中卡在ippicv这里，可以去这里下载,然后重命名为4e0352ce96473837b1d671ce87f17359-ippicv_2017u3_lnx_intel64_general_20170822.tgz，放入opencv-3.4.0/.cache/ippicv/下，重新安装。2.2 卸载opencv卸载方法如下，进入下载路径：1234567891011cd opencv-3.4.0/buildsudo make uninstallcd ../..sudo rm -rf opencv-3.4.0/sudo rm -rf /usr/local/include/opencv2 /usr/local/include/opencv /usr/include/opencv /usr/include/opencv2 /usr/local/share/opencv /usr/local/share/OpenCV /usr/share/opencv /usr/share/OpenCV /usr/local/bin/opencv* /usr/local/lib/libopencv* /usr/local/lib/pkgconfigsudo rm -rf /etc/ld.so.conf.d/opencv.confsudo sed -i '/PKG_CONFIG_PATH/d' /etc/bash.bashrcsudo ldconfigsudo updatedbcd ..source /etc/bash.bashrc3.python版opencvpython版本的opencv可通过pip直接下载安装，pip下载源建议设置为国内源，即在当前用户HOME目录下新建一个.pip/pip.conf文件，写入：1234[global]index-url = https://pypi.tuna.tsinghua.edu.cn/simple[install]trusted-host=pypi.tuna.tsinghua.edu.cn然后下载安装python-opencv:1pip install opencv-python卸载方式：1pip uninstall opencv-python]]></content>
-      <categories>
-        <category>软件安装与使用</category>
-      </categories>
-      <tags>
-        <tag>opencv</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Ubuntu下绑定USB设备]]></title>
     <url>%2F2019%2F01%2F28%2FUbuntu%E7%BB%91%E5%AE%9A%E8%AE%BE%E5%A4%87USB%2F</url>
     <content type="text"><![CDATA[前言由于板卡属于外部组件，通过USB和服务器建立联系，而Linux系统对于外部USB接口是根据插入顺序命名的，这一点对于板卡的访问有很大的局限性，因此我根据板卡的内核型号不同对其进行了绑定。Step1 查询主设备号。利用cat /proc/devices 查询ttyUSB的主设备号，每个usb接口都会在/dev目录下产生一个ttyUSB*文件Step2 利用lsusb查询当前的接口情况：​ 可以看到有三个同型号的usb接口，和一个用了转接头的其他型号usb接口。Step3 查询板卡详细信息。以ttyUSB0为例，利用udevadm info -a /dev/ttyUSB0这种方式查询该板卡的详细信息：​ 第一个KERNEL是唯一的，第二KERNELS部分有很多，所以需要先找设备的生产号，即idProduct和idVendor， 与上一步的查询结果对应；Step4 利用板卡信息，建立软连接。1sudo gedit /etc/udev/rules.d/4-device.rules（这里4对应了上面查询的主设备号，-device随意取名，后缀为rules），编辑内容如下：将上面查询的信息填入其中，并填写一个链接名字，如SYMLINK+=“device0”Step5 重新插拔USB端口，重启电脑，之后输入：1ls -l /dev/device*​ ​ 可以发现虽然ttyUSB序号变了，但是device已经自动重定向了。]]></content>
@@ -455,6 +444,17 @@
       <tags>
         <tag>USB</tag>
         <tag>板卡</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Ubuntu下opencv的安装与卸载]]></title>
+    <url>%2F2019%2F01%2F28%2FUbuntu%E4%B8%8Bopencv%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E5%8D%B8%E8%BD%BD%2F</url>
+    <content type="text"><![CDATA[前言Ubuntu上我们一般需要安装opencv来完成图像处理等程序操作，下面我以opencv3.4.0在Ubuntu16.04上的安装为例进行讲解。1. 系统自带opencvUbuntu16.04系统资源库自带opencv2.4.8，如果不需要用到高级功能，这点即可。其下载方法如下：1sudo apt install libopencv-dev判断系统上是否存在opencv，可输入：1pkg-config --modversion opencv卸载方法为:1sudo apt remove libopencv-dev2.官网下载安装opencv2.1 安装opencvStep1 卸载已有opencvStep2 进入Opencv官网选择对应版本source下载。Step3 在下载路径执行：12345678910111213141516171819202122232425262728293031if [ ! -d "opencv-3.4.0/" ];thenunzip opencv-3.4.0.zip -d ./elseecho "opencv package has been unzipped"fisudo apt-get install cmake pkg-config build-essential libgtk2.0-dev libavcodec-dev libavformat-dev libjpeg.dev libtiff4.dev libswscale-dev libjasper-dev -ycd opencv-3.4.0/sudo mkdir buildcd buildsudo make cleancmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local ..sudo make -j8sudo make installif [ 0 -eq $(cat /etc/ld.so.conf.d/opencv.conf | grep -c '/usr/local/lib') ] ;then echo '/usr/local/lib' &gt;&gt; /etc/ld.so.conf.d/opencv.conffiif [ 0 -eq $(cat /etc/bash.bashrc | grep -c 'PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig') ] ;then echo 'PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig' &gt;&gt; /etc/bash.bashrcfiif [ 0 -eq $(cat /etc/bash.bashrc | grep -c 'export PKG_CONFIG_PATH') ] ;then echo 'export PKG_CONFIG_PATH' &gt;&gt; /etc/bash.bashrcfisudo ldconfigsudo updatedbsource /etc/bash.bashrcStep4 如果安装过程中卡在ippicv这里，可以去这里下载,然后重命名为4e0352ce96473837b1d671ce87f17359-ippicv_2017u3_lnx_intel64_general_20170822.tgz，放入opencv-3.4.0/.cache/ippicv/下，重新安装。2.2 卸载opencv卸载方法如下，进入下载路径：1234567891011cd opencv-3.4.0/buildsudo make uninstallcd ../..sudo rm -rf opencv-3.4.0/sudo rm -rf /usr/local/include/opencv2 /usr/local/include/opencv /usr/include/opencv /usr/include/opencv2 /usr/local/share/opencv /usr/local/share/OpenCV /usr/share/opencv /usr/share/OpenCV /usr/local/bin/opencv* /usr/local/lib/libopencv* /usr/local/lib/pkgconfigsudo rm -rf /etc/ld.so.conf.d/opencv.confsudo sed -i '/PKG_CONFIG_PATH/d' /etc/bash.bashrcsudo ldconfigsudo updatedbcd ..source /etc/bash.bashrc3.python版opencvpython版本的opencv可通过pip直接下载安装，pip下载源建议设置为国内源，即在当前用户HOME目录下新建一个.pip/pip.conf文件，写入：1234[global]index-url = https://pypi.tuna.tsinghua.edu.cn/simple[install]trusted-host=pypi.tuna.tsinghua.edu.cn然后下载安装python-opencv:1pip install opencv-python卸载方式：1pip uninstall opencv-python]]></content>
+      <categories>
+        <category>软件安装与使用</category>
+      </categories>
+      <tags>
+        <tag>opencv</tag>
       </tags>
   </entry>
   <entry>
@@ -561,12 +561,7 @@
   <entry>
     <title><![CDATA[Piao Huang]]></title>
     <url>%2Fabout%2Findex.html</url>
-    <content type="text"><![CDATA[I am an Algorithm Engineer in Yitu Inc. My research interests are in computer vision and deep learning. You can contact me by piao.huang@yitu-inc.comEducationHuazhong University of Science and Technology (HUST) 2017.12 ~National Key Laboratory of Science and Technology on Multi-spectral Information Processing, School of Artificial Intelligence and Automation.Master of Control Science and Engineering.Huazhong Agricultural University (HZAU) 2013.9 ~ 2017.7Key Laboratory of Agricultural Equipment in the Middle and LowerReaches of the Yangtze River, Ministry of Agriculture, School of EngineeringBachelor of EngineeringPublicationsRefinements in Motion and Appearance for Online Multi-Object TrackingPiao Huang , Shoudong Han, Jun Zhao, Donghaisheng Liu, HongweiWang, En Yu, and Alex ChiChung Kot1st place of MOT Challenge 16&amp;17. 2020.3arxiv codeExperienceFace recognition access control system 2018.07 ~ 2019.08Responsible for the overall framework and all algorithm implementations1:1 and 1:N (N=8000)Security Intelligence System 2018.06 ~ 2018.12Responsible for the Face recognition access control systemm:N(N = 10000)Awards and HonorsNational 1st prize in CUMCM, 2015National 2nd prize in NPMCM, 2015Meritorious Winner in MCM/ICM, 2016National 2nd prize in NPMCM, 2018]]></content>
-  </entry>
-  <entry>
-    <title><![CDATA[分类]]></title>
-    <url>%2Fcategories%2Findex.html</url>
-    <content type="text"><![CDATA[]]></content>
+    <content type="text"><![CDATA[I am an Algorithm Engineer in Yitu Inc. My research interests are in computer vision and deep learning. You can contact me by piao.huang@yitu-inc.comEducationHuazhong University of Science and Technology (HUST) 2017.9 ~2020.7National Key Laboratory of Science and Technology on Multi-spectral Information Processing, School of Artificial Intelligence and Automation.Master of Control Science and Engineering.Huazhong Agricultural University (HZAU) 2013.9 ~ 2017.7Key Laboratory of Agricultural Equipment in the Middle and LowerReaches of the Yangtze River, Ministry of Agriculture, School of EngineeringBachelor of EngineeringPublicationsRefinements in Motion and Appearance for Online Multi-Object TrackingPiao Huang , Shoudong Han, Jun Zhao, Donghaisheng Liu, HongweiWang, En Yu, and Alex ChiChung Kot1st place of MOT Challenge 16&amp;17. 2020.3arxiv codeExperienceFace recognition access control system 2018.07 ~ 2019.08Responsible for the overall framework and all algorithm implementations1:1 and 1:N (N=8000)Security Intelligence System 2018.06 ~ 2018.12Responsible for the Face recognition access control systemm:N(N = 10000)Awards and HonorsNational 1st prize in CUMCM, 2015National 2nd prize in NPMCM, 2015Meritorious Winner in MCM/ICM, 2016National 2nd prize in NPMCM, 2018]]></content>
   </entry>
   <entry>
     <title><![CDATA[archives]]></title>
@@ -576,6 +571,11 @@
   <entry>
     <title><![CDATA[标签]]></title>
     <url>%2Ftags%2Findex.html</url>
+    <content type="text"><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[分类]]></title>
+    <url>%2Fcategories%2Findex.html</url>
     <content type="text"><![CDATA[]]></content>
   </entry>
 </search>
